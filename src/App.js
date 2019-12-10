@@ -1,26 +1,52 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from './Components/Header'
+import routes from './routes'
+import {Switch, Route} from 'react-router-dom'
+import axios from 'axios'
+import Home from './Components/Home'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      products: []
+    }
+  }
+  componentDidMount(){
+    console.log('hit')
+    this.getProducts()
+  }
+  deleteProduct = (id) => {
+    axios.delete(`/api/products/${id}`).then(res => {
+      this.setState({
+        products: res.data
+      })
+    })
+}
+  getProducts = () => {
+    axios.get('/api/products').then(res => {
+      // console.log(res.data)
+      this.setState({
+        products: res.data
+      })
+    })
+}
+  render(){
+    console.log(this.state.products)
+    return (
+      <div className="App">
+        <Header/>
+        {routes}
+        <Switch>
+          <Route exact path='/' render={(props) => {
+            return <Home {...props} delete={this.deleteProduct} products={this.state.products} />
+          }} />
+        </Switch>
+      </div>
+    );
+
+  }
 }
 
 export default App;
