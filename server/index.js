@@ -10,7 +10,10 @@ app.post('/api/products', ctrl.addProduct)
 app.get('/api/products', ctrl.getProducts)
 app.delete('/api/products/:id', ctrl.delete)
 
-massive(CONNECTION_STRING)
+massive({
+    connectionString: CONNECTION_STRING,
+    ssl: {rejectUnauthorized: false}
+})
 .then(db => {
     app.set('db', db)
     console.log('connected')

@@ -6,6 +6,6 @@ import Edit from './Components/Edit'
 export default (
     <Switch>
         <Route path='/add' component={Add}/>
-        <Route path='/edit' component={Edit}/>
+        <Route path='/edit/:id' component={Edit}/>
     </Switch>
 )

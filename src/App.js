@@ -14,7 +14,7 @@ class App extends React.Component{
     }
   }
   componentDidMount(){
-    console.log('hit')
+    // console.log('hit')
     this.getProducts()
   }
   deleteProduct = (id) => {
